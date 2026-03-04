@@ -271,6 +271,3 @@ When using Docker with a mounted volume, ensure the directory exists and has wri
 **Port already in use**
 Change the port mapping: `docker run -p 8080:8000 ...` and access at `http://localhost:8080`.
 
-**Geodesic distance errors**
-If you remove `geopy` from requirements, replace the distance calculation with a manual Haversine formula. The current implementation expects geopy to be installed.
-
