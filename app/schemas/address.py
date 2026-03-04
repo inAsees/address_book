@@ -1,34 +1,48 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 from datetime import datetime
 from typing import Optional
 
 
 class AddressBase(BaseModel):
-    street: str
-    city: str
-    state: Optional[str] = None
-    country: str
-    postal_code: Optional[str] = None
+    latitude: float
+    longitude: float
+
+    @field_validator("latitude")
+    def validate_latitude(cls, v):
+        if not -90 <= v <= 90:
+            raise ValueError("Latitude must be between -90 and 90")
+        return v
+
+    @field_validator("longitude")
+    def validate_longitude(cls, v):
+        if not -180 <= v <= 180:
+            raise ValueError("Longitude must be between -180 and 180")
+        return v
 
 
 class AddressCreate(AddressBase):
-    # All fields from AddressBase are required, except optionals.
-    # No additional fields needed.
     pass
 
 
 class AddressUpdate(BaseModel):
-    street: Optional[str] = None
-    city: Optional[str] = None
-    state: Optional[str] = None
-    country: Optional[str] = None
-    postal_code: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+    @field_validator("latitude")
+    def validate_latitude(cls, v):
+        if v is not None and not -90 <= v <= 90:
+            raise ValueError("Latitude must be between -90 and 90")
+        return v
+
+    @field_validator("longitude")
+    def validate_longitude(cls, v):
+        if v is not None and not -180 <= v <= 180:
+            raise ValueError("Longitude must be between -180 and 180")
+        return v
 
 
 class AddressInDB(AddressBase):
     id: int
-    latitude: Optional[float] = None
-    longitude: Optional[float] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
 
