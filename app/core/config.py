@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic_settings import BaseSettings
 from pydantic import ConfigDict
 
@@ -13,6 +14,7 @@ class Settings(BaseSettings):
     # Logging
     log_level: str = "INFO"
     log_format: str = "json"  # or "text"
+    log_file: Optional[str] = None # Log file path
 
     # Geocoding
     geocoding_timeout: int = 5  # seconds
