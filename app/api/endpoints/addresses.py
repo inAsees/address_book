@@ -68,7 +68,7 @@ def delete_address(
 def find_nearby_addresses(
         latitude: float,
         longitude: float,
-        distance_km: float = 5.0,
+        distance_km: float,
         db: Session = Depends(dependencies.get_db)
 ):
     """Find addresses within a given distance (km) from specified coordinates."""
